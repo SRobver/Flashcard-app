@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import './Flashcard.css'; // Importing CSS for styling
 
 const Flashcard = ({ flashcard, onNext, onPrevious }) => {
     const [flipped, setFlipped] = useState(false);
+
+    // Ensure flashcard is defined and has the necessary properties
+    if (!flashcard) {
+        return <div>Loading...</div>; // Handle cases where flashcard data is not available
+    }
 
     return (
         <div className="flashcard-container">
@@ -18,4 +24,17 @@ const Flashcard = ({ flashcard, onNext, onPrevious }) => {
     );
 };
 
+// Add PropTypes for type checking
+Flashcard.propTypes = {
+    flashcard: PropTypes.shape({
+        question: PropTypes.string,
+        answer: PropTypes.string,
+        isFirst: PropTypes.bool,
+        isLast: PropTypes.bool
+    }),
+    onNext: PropTypes.func.isRequired,
+    onPrevious: PropTypes.func.isRequired
+};
+
 export default Flashcard;
+
